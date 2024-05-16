@@ -22,6 +22,7 @@ public class GamePanel extends JPanel implements ActionListener {
     char currentDirection = 'R';
     private LinkedList<Character> directions = new LinkedList<>();
     boolean running = false;
+    boolean dead = false;
     Timer timer;
     Random random;
 
@@ -70,6 +71,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 g.drawString("Score: " + appleEaten, (screenWidth - metrics.stringWidth("Score: " + appleEaten)) / 2, g.getFont().getSize());
             }
         } else gameOver(g);
+        dead = true;
     }
 
     public void newApple() {
