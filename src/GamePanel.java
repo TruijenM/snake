@@ -49,10 +49,10 @@ public class GamePanel extends JPanel implements ActionListener {
     public void draw(Graphics g) {
 
         if (running) {
-            for (int i = 0; i < screenHeight / unitSize; i++) {
-                g.drawLine(i * unitSize, 0, i * unitSize, screenHeight);
-                g.drawLine(0, i * unitSize, screenWidth, i * unitSize);
-            }
+//            for (int i = 0; i < screenHeight / unitSize; i++) {
+//                g.drawLine(i * unitSize, 0, i * unitSize, screenHeight);
+//                g.drawLine(0, i * unitSize, screenWidth, i * unitSize);
+//            }
             g.setColor(Color.red);
             g.fillOval(appleX, appleY, unitSize, unitSize);
 
@@ -67,7 +67,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 g.setColor(Color.red);
                 g.setFont(new Font("LinkedList Free", Font.PLAIN, 30));
                 FontMetrics metrics = getFontMetrics(g.getFont());
-                g.drawString("Score: "+ appleEaten,(screenWidth-metrics.stringWidth("Score: "+ appleEaten))/2,g.getFont().getSize());
+                g.drawString("Score: " + appleEaten, (screenWidth - metrics.stringWidth("Score: " + appleEaten)) / 2, g.getFont().getSize());
             }
         } else gameOver(g);
     }
@@ -141,7 +141,12 @@ public class GamePanel extends JPanel implements ActionListener {
         g.setColor(Color.red);
         g.setFont(new Font("LinkedList Free", Font.BOLD, 75));
         FontMetrics metrics = getFontMetrics(g.getFont());
-        g.drawString("Game Over",(screenWidth-metrics.stringWidth("Game Over"))/2,screenHeight/2);
+        g.drawString("Game Over", (screenWidth - metrics.stringWidth("Game Over")) / 2, screenHeight / 2);
+
+        g.setColor(Color.red);
+        g.setFont(new Font("LinkedList Free", Font.PLAIN, 30));
+        FontMetrics metrics2 = getFontMetrics(g.getFont());
+        g.drawString("Score: " + appleEaten, (screenWidth - metrics2.stringWidth("Score: " + appleEaten)) / 2, g.getFont().getSize());
     }
 
     @Override
