@@ -122,7 +122,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 bodyParts++;
                 appleEaten++;
             }
-            if (random.nextInt(0, 20) == 10) {
+            if (random.nextInt(0, 2) == 1) {
                 goldenApple = true;
             }
             newApple();
@@ -177,7 +177,7 @@ public class GamePanel extends JPanel implements ActionListener {
             g.drawString("NEW HIGH SCORE!!!", (screenWidth - metrics3.stringWidth("NEW HIGH SCORE!!!")) / 2, 2 * screenHeight / 5);
             highScore = appleEaten;
         }
-        g.drawString("High Score: " + appleEaten, (screenWidth - metrics3.stringWidth("High Score=" + appleEaten)) / 2, (2 * screenHeight / 4));
+        g.drawString("High Score: " + highScore, (screenWidth - metrics3.stringWidth("High Score=" + highScore)) / 2, (2 * screenHeight / 4));
     }
 
     @Override
