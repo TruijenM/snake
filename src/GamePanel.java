@@ -122,7 +122,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 bodyParts++;
                 appleEaten++;
             }
-            if (random.nextInt(0, 2) == 1) {
+            if (random.nextInt(0, 20) == 10) {
                 goldenApple = true;
             }
             newApple();
