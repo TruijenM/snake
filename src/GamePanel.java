@@ -25,6 +25,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private LinkedList<Character> directions = new LinkedList<>();
     boolean running = false;
     boolean dead = false;
+    boolean goldenApple = false;
     Timer timer;
     Random random;
 
@@ -54,8 +55,13 @@ public class GamePanel extends JPanel implements ActionListener {
     public void draw(Graphics g) {
 
         if (running) {
-            g.setColor(Color.red);
-            g.fillOval(appleX, appleY, unitSize, unitSize);
+            if (!goldenApple) {
+                g.setColor(Color.red);
+                g.fillOval(appleX, appleY, unitSize, unitSize);
+            } else {
+                g.setColor(Color.yellow);
+                g.fillOval(appleX, appleY, unitSize, unitSize);
+            }
 
             for (int i = 0; i < bodyParts; i++) {
                 if (i == 0) {
@@ -107,8 +113,17 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void checkApple() {
         if ((x[0] == appleX) && (y[0] == appleY)) {
-            bodyParts++;
-            appleEaten++;
+            if (goldenApple) {
+                bodyParts += 5;
+                appleEaten += 5;
+                goldenApple = false;
+            } else {
+                bodyParts++;
+                appleEaten++;
+            }
+            if (random.nextInt(0, 20) == 10) {
+                goldenApple = true;
+            }
             newApple();
         }
     }
@@ -125,7 +140,7 @@ public class GamePanel extends JPanel implements ActionListener {
             running = false;
         }
         //check if head touches right border
-        if (x[0] > screenWidth) {
+        if (x[0] > screenWidth - 1) {
             running = false;
         }
         //check if head touches top border
@@ -192,12 +207,9 @@ public class GamePanel extends JPanel implements ActionListener {
                     }
                     break;
                 case KeyEvent.VK_F2:
-                    if(dead) {
+                    if (dead) {
                         resetGame();
                     }
-                    break;
-                default:
-//                    System.out.println("Received unsupported command: " + e.getKeyCode());
                     break;
             }
         }
@@ -210,6 +222,7 @@ public class GamePanel extends JPanel implements ActionListener {
         directions.clear();
         currentDirection = 'R';
         dead = false;
+        goldenApple = false;
         startGame();
     }
 }
