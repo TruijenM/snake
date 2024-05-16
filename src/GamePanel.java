@@ -134,6 +134,7 @@ public class GamePanel extends JPanel implements ActionListener {
         for (int i = bodyParts; i > 0; i--) {
             if ((x[0]) == x[i] && (y[0] == y[i])) {
                 running = false;
+                break;
             }
         }
         //check if head touches left border
@@ -149,7 +150,7 @@ public class GamePanel extends JPanel implements ActionListener {
             running = false;
         }
         //check if head touches bottom border
-        if (y[0] > screenHeight) {
+        if (y[0] > screenHeight - 1) {
             running = false;
         }
         if (!running) {
