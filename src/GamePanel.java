@@ -21,6 +21,7 @@ public class GamePanel extends JPanel implements ActionListener {
     int appleEaten;
     int appleX;
     int appleY;
+    int highScore = 0;
     char currentDirection = 'R';
     private LinkedList<Character> directions = new LinkedList<>();
     boolean running = false;
@@ -170,6 +171,13 @@ public class GamePanel extends JPanel implements ActionListener {
         g.setFont(new Font("LinkedList Free", Font.PLAIN, 30));
         FontMetrics metrics2 = getFontMetrics(g.getFont());
         g.drawString("Score: " + appleEaten, (screenWidth - metrics2.stringWidth("Score: " + appleEaten)) / 2, g.getFont().getSize());
+        g.setColor(Color.green);
+        FontMetrics metrics3 = getFontMetrics(g.getFont());
+        if (appleEaten > highScore) {
+            g.drawString("NEW HIGH SCORE!!!", (screenWidth - metrics3.stringWidth("NEW HIGH SCORE!!!")) / 2, 2 * screenHeight / 5);
+            highScore = appleEaten;
+        }
+        g.drawString("High Score: " + appleEaten, (screenWidth - metrics3.stringWidth("High Score=" + appleEaten)) / 2, (2 * screenHeight / 4));
     }
 
     @Override
