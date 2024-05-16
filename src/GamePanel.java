@@ -4,10 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
+    private static final int DEFAULT_BODY_SIZE = 6;
     static final int screenWidth = 600;
     static final int screenHeight = 600;
     static final int unitSize = 25;
@@ -36,12 +38,14 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void startGame() {
+        this.appleEaten = 0;
         newApple();
         running = true;
         timer = new Timer(delay, this);
         timer.start();
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         draw(g);
@@ -50,10 +54,6 @@ public class GamePanel extends JPanel implements ActionListener {
     public void draw(Graphics g) {
 
         if (running) {
-//            for (int i = 0; i < screenHeight / unitSize; i++) {
-//                g.drawLine(i * unitSize, 0, i * unitSize, screenHeight);
-//                g.drawLine(0, i * unitSize, screenWidth, i * unitSize);
-//            }
             g.setColor(Color.red);
             g.fillOval(appleX, appleY, unitSize, unitSize);
 
@@ -70,8 +70,10 @@ public class GamePanel extends JPanel implements ActionListener {
                 FontMetrics metrics = getFontMetrics(g.getFont());
                 g.drawString("Score: " + appleEaten, (screenWidth - metrics.stringWidth("Score: " + appleEaten)) / 2, g.getFont().getSize());
             }
-        } else gameOver(g);
-        dead = true;
+        } else {
+            gameOver(g);
+            dead = true;
+        }
     }
 
     public void newApple() {
@@ -143,7 +145,11 @@ public class GamePanel extends JPanel implements ActionListener {
         g.setColor(Color.red);
         g.setFont(new Font("LinkedList Free", Font.BOLD, 75));
         FontMetrics metrics = getFontMetrics(g.getFont());
-        g.drawString("Game Over", (screenWidth - metrics.stringWidth("Game Over")) / 2, screenHeight / 2);
+        g.drawString("Game Over", (screenWidth - metrics.stringWidth("Game Over")) / 2, screenHeight / 3);
+
+        g.setFont(new Font("LinkedList Free", Font.PLAIN, 30));
+        metrics = getFontMetrics(g.getFont());
+        g.drawString("Press F2 to start a new game", (screenWidth - metrics.stringWidth("Press F2 to start a new game")) / 2, 2 * screenHeight / 3);
 
         g.setColor(Color.red);
         g.setFont(new Font("LinkedList Free", Font.PLAIN, 30));
@@ -185,7 +191,25 @@ public class GamePanel extends JPanel implements ActionListener {
                         directions.add('D');
                     }
                     break;
+                case KeyEvent.VK_F2:
+                    if(dead) {
+                        resetGame();
+                    }
+                    break;
+                default:
+//                    System.out.println("Received unsupported command: " + e.getKeyCode());
+                    break;
             }
         }
+    }
+
+    private void resetGame() {
+        bodyParts = DEFAULT_BODY_SIZE;
+        Arrays.fill(x, 0);
+        Arrays.fill(y, 0);
+        directions.clear();
+        currentDirection = 'R';
+        dead = false;
+        startGame();
     }
 }
