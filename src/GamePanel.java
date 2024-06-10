@@ -21,7 +21,7 @@ public class GamePanel extends JPanel implements ActionListener {
     int appleEaten;
     int appleX;
     int appleY;
-    int highScore = 0;
+    int highScore;
     char currentDirection = 'R';
     private LinkedList<Character> directions = new LinkedList<>();
     boolean running = false;
@@ -29,6 +29,9 @@ public class GamePanel extends JPanel implements ActionListener {
     boolean goldenApple = false;
     Timer timer;
     Random random;
+    Color defaultBodyColor = new Color(43, 145, 11);
+    Color goldenBodyAppleColor = new Color(0x6161EC);
+    Color currentBodyColor = defaultBodyColor;
 
     GamePanel() {
         random = new Random();
@@ -54,7 +57,6 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void draw(Graphics g) {
-
         if (running) {
             if (!goldenApple) {
                 g.setColor(Color.red);
@@ -67,10 +69,10 @@ public class GamePanel extends JPanel implements ActionListener {
             for (int i = 0; i < bodyParts; i++) {
                 if (i == 0) {
                     g.setColor(Color.green);
-                    g.fillRect(x[i], y[i], unitSize, unitSize);
+                    g.fillOval(x[i], y[i], unitSize, unitSize);
                 } else {
-                    g.setColor(new Color(43, 145, 11));
-                    g.fillRect(x[i], y[i], unitSize, unitSize);
+                    g.setColor(currentBodyColor);
+                    g.fillOval(x[i], y[i], unitSize, unitSize);
                 }
                 g.setColor(Color.red);
                 g.setFont(new Font("LinkedList Free", Font.PLAIN, 30));
@@ -118,9 +120,12 @@ public class GamePanel extends JPanel implements ActionListener {
                 bodyParts += 5;
                 appleEaten += 5;
                 goldenApple = false;
+                currentBodyColor = goldenBodyAppleColor;
+
             } else {
                 bodyParts++;
                 appleEaten++;
+                currentBodyColor = defaultBodyColor;
             }
             if (random.nextInt(0, 20) == 10) {
                 goldenApple = true;
@@ -226,6 +231,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void resetGame() {
         bodyParts = DEFAULT_BODY_SIZE;
+        currentBodyColor = defaultBodyColor;
         Arrays.fill(x, 0);
         Arrays.fill(y, 0);
         directions.clear();
