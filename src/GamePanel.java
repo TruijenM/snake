@@ -134,7 +134,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-    public void checkColissions() {
+    public void checkCollisions() {
         //check if had collides with body
         for (int i = bodyParts; i > 0; i--) {
             if ((x[0]) == x[i] && (y[0] == y[i])) {
@@ -191,7 +191,7 @@ public class GamePanel extends JPanel implements ActionListener {
         if (running) {
             move();
             checkApple();
-            checkColissions();
+            checkCollisions();
         }
         repaint();
     }
