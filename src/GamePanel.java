@@ -27,6 +27,7 @@ public class GamePanel extends JPanel implements ActionListener {
     boolean running = false;
     boolean dead = false;
     boolean goldenApple = false;
+    boolean showGridLines = false;
     Timer timer;
     Random random;
     Color defaultBodyColor = new Color(43, 145, 11);
@@ -57,6 +58,12 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void draw(Graphics g) {
+        if (showGridLines) {
+            for (int i = 0; i < screenHeight / unitSize; i++) {
+                g.drawLine(i * unitSize, 0, i * unitSize, screenHeight);
+                g.drawLine(0, i * unitSize, screenWidth, i * unitSize);
+            }
+        }
         if (running) {
             if (!goldenApple) {
                 g.setColor(Color.red);
@@ -220,11 +227,15 @@ public class GamePanel extends JPanel implements ActionListener {
                         directions.add('D');
                     }
                     break;
+                case KeyEvent.VK_G:
+                    showGridLines = !showGridLines;
+                    break;
                 case KeyEvent.VK_F2:
                     if (dead) {
                         resetGame();
                     }
                     break;
+
             }
         }
     }
